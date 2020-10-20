@@ -344,7 +344,7 @@ ClientOAuth2Token.prototype.sign = function (requestObject) {
   } else {
     var parts = requestObject.url.split('#')
     var token = 'access_token=' + this.accessToken
-    var url = parts[0].replace(/[?&]access_token=[^&#]/, '')
+    var url = parts[0].replace(/[?&]access_token=[\w]+]/, '')
     var fragment = parts[1] ? '#' + parts[1] : ''
 
     // Prepend the correct query string parameter to the url.
