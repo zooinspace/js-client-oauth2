@@ -379,10 +379,10 @@ ClientOAuth2Token.prototype.refresh = function (opts) {
     headers: Object.assign({}, DEFAULT_HEADERS, {
       Authorization: auth(options.clientId, options.clientSecret)
     }),
-    body: {
+    body: Object.assign({}, {
       refresh_token: this.refreshToken,
       grant_type: 'refresh_token'
-    }
+    }, (options.body || {}))
   }, options))
     .then(function (data) {
       return self.client.createToken(Object.assign({}, self.data, data))
