@@ -372,6 +372,11 @@ ClientOAuth2Token.prototype.refresh = function (opts) {
   if (!this.refreshToken) {
     return Promise.reject(new Error('No refresh token'))
   }
+  
+  var clientCreds = {
+    client_id: options.clientId,
+    client_secret: options.clientSecret
+  }
 
   return this.client._request(requestOptions({
     url: options.accessTokenUri,
@@ -382,7 +387,7 @@ ClientOAuth2Token.prototype.refresh = function (opts) {
     body: Object.assign({}, {
       refresh_token: this.refreshToken,
       grant_type: 'refresh_token'
-    }, (options.body || {}))
+    }, (options.body || {}), clientCreds)
   }, options))
     .then(function (data) {
       return self.client.createToken(Object.assign({}, self.data, data))
